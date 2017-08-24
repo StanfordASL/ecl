@@ -192,10 +192,10 @@ void Ekf::controlExternalVisionFusion()
 				// add the reset amount to the output observer buffered data
 				outputSample output_states;
 				unsigned output_length = _output_buffer.get_length();
-				for (unsigned i=0; i < output_length; i++) {
+				for (unsigned i = 0; i < output_length; i++) {
 					output_states = _output_buffer.get_from_index(i);
 					output_states.quat_nominal *= _state_reset_status.quat_change;
-					_output_buffer.push_to_index(i,output_states);
+					_output_buffer.push_to_index(i, output_states);
 				}
 
 				// apply the change in attitude quaternion to our newest quaternion estimate
@@ -424,7 +424,7 @@ void Ekf::controlGpsFusion()
 					}
 					if (_control_status.flags.gps) {
 						ECL_INFO("EKF commencing GPS fusion");
-					       _time_last_gps = _time_last_imu;
+						_time_last_gps = _time_last_imu;
 
 					}
 				}
@@ -470,7 +470,7 @@ void Ekf::controlGpsFusion()
 			// correct velocity for offset relative to IMU
 			Vector3f ang_rate = _imu_sample_delayed.delta_ang * (1.0f/_imu_sample_delayed.delta_ang_dt);
 			Vector3f pos_offset_body = _params.gps_pos_body - _params.imu_pos_body;
-			Vector3f vel_offset_body = cross_product(ang_rate,pos_offset_body);
+			Vector3f vel_offset_body = cross_product(ang_rate, pos_offset_body);
 			Vector3f vel_offset_earth = _R_to_earth * vel_offset_body;
 			_gps_sample_delayed.vel -= vel_offset_earth;
 
@@ -577,7 +577,7 @@ void Ekf::controlHeightSensorTimeouts()
 				reset_height = true;
 				ECL_WARN("EKF baro hgt timeout - reset to GPS");
 
-			} else if (reset_to_baro){
+			} else if (reset_to_baro) {
 				// set height sensor health
 				_baro_hgt_faulty = false;
 
@@ -986,11 +986,12 @@ void Ekf::checkForStuckRange()
 
 void Ekf::controlAirDataFusion()
 {
-        // control activation and initialisation/reset of wind states required for airspeed fusion
+	// control activation and initialisation/reset of wind states required for airspeed fusion
 
 	// If both airspeed and sideslip fusion have timed out and we are not using a drag observation model then we no longer have valid wind estimates
-        bool airspeed_timed_out = _time_last_imu - _time_last_arsp_fuse > 10e6;
-        bool sideslip_timed_out = _time_last_imu - _time_last_beta_fuse > 10e6;
+	bool airspeed_timed_out = _time_last_imu - _time_last_arsp_fuse > 10e6;
+	bool sideslip_timed_out = _time_last_imu - _time_last_beta_fuse > 10e6;
+
 	if (_control_status.flags.wind && airspeed_timed_out && sideslip_timed_out && !(_params.fusion_mode & MASK_USE_DRAG)) {
 		_control_status.flags.wind = false;
 
@@ -1050,15 +1051,12 @@ void Ekf::controlBetaFusion()
 		}
 
 		fuseSideslip();
- 	}
-
-
-
+	}
 }
 
 void Ekf::controlDragFusion()
 {
-	if (_params.fusion_mode & MASK_USE_DRAG ) {
+	if (_params.fusion_mode & MASK_USE_DRAG) {
 		if (_control_status.flags.in_air) {
 			if (!_control_status.flags.wind) {
 				// reset the wind states and covariances when starting drag accel fusion

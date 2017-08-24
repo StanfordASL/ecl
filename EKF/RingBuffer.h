@@ -71,7 +71,7 @@ public:
 
 		_size = size;
 		// set the time elements to zero so that bad data is not retrieved from the buffers
-		for (unsigned index=0; index < _size; index++) {
+		for (unsigned index = 0; index < _size; index++) {
 			_buffer[index].time_us = 0;
 		}
 		_first_write = true;
@@ -168,7 +168,7 @@ public:
 	inline data_type get_from_index(unsigned index)
 	{
 		if (index >= _size) {
-			index = _size-1;
+			index = _size - 1;
 		}
 		return _buffer[index];
 	}
@@ -177,7 +177,7 @@ public:
 	inline void push_to_index(unsigned index, data_type sample)
 	{
 		if (index >= _size) {
-			index = _size-1;
+			index = _size - 1;
 		}
 		_buffer[index] = sample;
 	}
