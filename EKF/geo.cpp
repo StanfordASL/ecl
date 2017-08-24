@@ -42,22 +42,14 @@
  * @author Anton Babushkin <anton.babushkin@me.com>
  */
 #ifdef POSIX_SHARED
-//#include <unistd.h>
-//#include <pthread.h>
+
+#include "ecl.h"
+
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
 #include <float.h>
-
-#ifndef __PX4_QURT
-#if defined(__cplusplus) && !defined(__PX4_NUTTX)
-#include <cmath>
-#define ISFINITE(x) std::isfinite(x)
-#else
-#define ISFINITE(x) isfinite(x)
-#endif
-#endif
 
 /****************************************************************************
  *

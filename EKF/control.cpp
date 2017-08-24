@@ -968,11 +968,13 @@ void Ekf::checkForStuckRange()
 			_rng_stuck = false;
 
 		} else {
-			if (_range_sample_delayed.rng > _rng_check_max_val)
+			if (_range_sample_delayed.rng > _rng_check_max_val) {
 				_rng_check_max_val = _range_sample_delayed.rng;
+			}
 
-			if (_rng_check_min_val < 0.1f || _range_sample_delayed.rng < _rng_check_min_val)
+			if (_rng_check_min_val < 0.1f || _range_sample_delayed.rng < _rng_check_min_val) {
 				_rng_check_min_val = _range_sample_delayed.rng;
+			}
 
 			_range_data_ready = false;
 		}
